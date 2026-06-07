@@ -2,30 +2,33 @@ name: Build iOS
 
 on:
   push:
-    branches: [ "main" ] # 或者 master
+    branches: [ "main", "master" ]
 
 jobs:
   build-ios:
     runs-on: macos-latest
     
-    # 💥 核心修复：告诉 GitHub 你的代码在哪个文件夹里！
-    # 如果你的文件夹不叫 jizhangApp-ios，请改成你仓库里实际装有 gradlew 的文件夹名
+    # ⚠️ 如果你的项目确实在一个叫 jizhangApp-ios 的文件夹里，保留下面这两行；
+    # 如果你的项目代码就在仓库最外面，请删除这两行！
     defaults:
       run:
         working-directory: ./jizhangApp-ios 
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'zulu'
 
-      # 现在系统已经进到文件夹里了，绝对能找到 gradlew 并加权限！
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
+      # 💥 杀手锏 1：使用官方环境，直接跳过你本地损坏的 wrapper！
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.11' # 强制使用官方 8.11 引擎
+          
+      # 💥 杀手锏 2：看清楚，这里用的是 gradle，不是 ./gradlew ！！！
       - name: Build iOS Framework
-        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+        run: gradle :composeApp:linkDebugFrameworkIosSimulatorArm64
