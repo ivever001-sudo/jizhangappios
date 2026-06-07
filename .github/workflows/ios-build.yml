@@ -28,6 +28,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: '8.11' # 强制使用官方 8.11 引擎
+          cache-read-only: true
           
       # 💥 杀手锏 2：看清楚，这里用的是 gradle，不是 ./gradlew ！！！
       - name: Build iOS Framework
