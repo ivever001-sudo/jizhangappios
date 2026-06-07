@@ -32,4 +32,4 @@ jobs:
           
       # 💥 杀手锏 2：看清楚，这里用的是 gradle，不是 ./gradlew ！！！
       - name: Build iOS Framework
-        run: gradle :composeApp:linkDebugFrameworkIosSimulatorArm64
+        run: gradle :composeApp:linkDebugFrameworkIosSimulatorArm64 --no-build-cache --rerun-tasks
