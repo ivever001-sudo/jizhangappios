@@ -126,3 +126,7 @@ dependencies {
     add("kspIosArm64", "androidx.room:room-compiler:2.7.0")
     add("kspIosSimulatorArm64", "androidx.room:room-compiler:2.7.0")
 }
+// 💥 修复 Room 报错：告诉 Room 把数据库结构导出到当前模块的 schemas 文件夹
+room {
+    schemaDirectory("$projectDir/schemas")
+}
