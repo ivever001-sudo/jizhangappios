@@ -2,18 +2,28 @@ name: Build iOS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ] # 如果你的主分支叫 master，请改成 master
 
 jobs:
   build-ios:
-    runs-on: macos-latest # 白嫖 GitHub 的 Mac 虚拟机
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'zulu'
+
+      # 💥 杀手锏 1：赋予 Mac 环境下的可执行权限 (专门解决 Windows 传上去权限丢失的问题)
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # 💥 杀手锏 2：执行打包
       - name: Build iOS Framework
+        # 如果你的 gradlew 就在仓库最外层，直接用下面这行：
         run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
-      # 这步跑通说明你的代码在 iOS 上完全兼容！
+        
+        # ⚠️ 注意：如果你的 gradlew 藏在叫 jizhangApp-ios 的文件夹里，请【删除上一行】，并使用下面这行：
+        # run: cd jizhangApp-ios && chmod +x ./gradlew && ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
