@@ -7,9 +7,7 @@ on:
 jobs:
   build-ios:
     runs-on: macos-latest
-    
-    # ⚠️ 如果你的项目确实在一个叫 jizhangApp-ios 的文件夹里，保留下面这两行；
-    # 如果你的项目代码就在仓库最外面，请删除这两行！
+
     defaults:
       run:
         working-directory: ./jizhangApp-ios 
