@@ -1,0 +1,19 @@
+name: Build iOS
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-ios:
+    runs-on: macos-latest # 白嫖 GitHub 的 Mac 虚拟机
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+      - name: Build iOS Framework
+        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+      # 这步跑通说明你的代码在 iOS 上完全兼容！
