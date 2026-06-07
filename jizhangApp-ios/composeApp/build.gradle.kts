@@ -46,7 +46,6 @@ kotlin {
 
             // Room KMP (实体 + DAO 接口)
             implementation("androidx.room:room-runtime:2.7.0")
-            implementation("androidx.room:room-ktx:2.7.0")
 
             // kotlinx-datetime — 跨平台日期时间（替代 java.util.Calendar）
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
